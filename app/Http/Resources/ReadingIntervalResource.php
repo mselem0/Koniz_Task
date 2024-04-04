@@ -14,6 +14,12 @@ class ReadingIntervalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'user_id' => $this->user_id,
+            'book_id' => $this->user_id,
+            'start_page' => $this->start_page,
+            'end_page' => $this->end_page,
+            'interval' => $this->end_page - $this->start_page . " page"
+        ];
     }
 }

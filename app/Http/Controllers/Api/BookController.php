@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookResource;
-use App\Http\Resources\ReadingIntervalResource;
-use App\Models\Book;
-use App\Models\ReadingInterval;
-use App\Traits\ApiResponseTrait;
+ use App\Models\Book;
+ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
@@ -17,9 +14,10 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = BookResource::collection(Book::get());
+        $books = Book::paginate(10); // Assuming 10 items per page, you can adjust this number as needed
+        $booksCollection = BookResource::collection($books);
 
-        return $this->successResponse($books, 'ok', 200);
+        return $this->successResponse($booksCollection, 'ok', 200);
     }
 
     public function show($book_id)
@@ -57,36 +55,5 @@ class BookController extends Controller
         } else {
             return $this->successResponse(null, 'Something went wrong !', 400);
         }
-    }
-
-    public function storeReadingInterval(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'integer'],
-            'book_id' => ['required', 'integer'],
-            'start_page' => ['required', 'integer'],
-            'end_page' => ['required', 'integer'],
-        ]);
-
-        if ($validator->fails()) {
-            return $this->successResponse(null, $validator->errors(), 400);
-        }
-
-        $reading_interval = ReadingInterval::create(
-            [
-                'user_id' => $request->user_id,
-                'book_id' => $request->book_id,
-                'start_page' => $request->start_page,
-                'end_page' => $request->end_page
-            ]
-        );
-
-        if ($reading_interval) {
-            return $this->successResponse(new ReadingIntervalResource($reading_interval), 'Reading Interval has been created successfully', 201);
-        } else {
-            return $this->successResponse(null, 'Something went wrong !', 404);
-        }
-
-
     }
 }

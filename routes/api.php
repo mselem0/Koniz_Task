@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\ReadingIntervalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,23 +24,30 @@ use Illuminate\Support\Facades\Route;
 
 //---------------------------- Auth Routes ---------------------------
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
 });
+
 //---------------------------- Auth Routes ---------------------------
 
 
 //---------------------------- Books Routes ---------------------------
-Route::get('books', [BookController::class, 'index']);
-Route::put('books', [BookController::class, 'store']);
-Route::delete('/books/{book}', [BookController::class, 'destroy']);
-Route::get('/books/{book}', [BookController::class, 'show']);
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::get('/books', [BookController::class, 'index']);
+    Route::put('/books', [BookController::class, 'store']);
+    Route::delete('/books/{book}', [BookController::class, 'destroy']);
+    Route::get('/books/{book}', [BookController::class, 'show']);
+});
+
 //---------------------------- Books Routes ---------------------------
 
-Route::put('reading-interval', [BookController::class, 'storeReadingInterval']);
+//---------------------------- Reading Interval Routes ----------------
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::put('/reading-interval', [ReadingIntervalController::class, 'store']);
+});
+//---------------------------- Reading Interval Routes ----------------

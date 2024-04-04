@@ -11,7 +11,17 @@ class ReadingInterval extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-      'start_page',
-      'end_page'
+        'start_page',
+        'end_page'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }
