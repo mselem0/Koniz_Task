@@ -15,13 +15,13 @@ git clone https://github.com/mselem0/Koniz_Task.git
 <p>2. Create env (Mac/Linux)</p>
 
 ```
-cp envexample .env
+cp  .env.example .env
 ```
 
 <p>3. Create env (windows)</p>
 
 ```
-copy envexample .env
+copy .env.example .env
 ```
 
 <p>4. Run Composer</p>
