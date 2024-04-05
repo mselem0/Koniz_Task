@@ -59,3 +59,9 @@ php artisan db:seed
 ```
 php artisan serve --port=8001
 ```
+
+<p>10. See Docs</p>
+
+```
+https://documenter.getpostman.com/view/26243035/2sA35LVegT
+```
