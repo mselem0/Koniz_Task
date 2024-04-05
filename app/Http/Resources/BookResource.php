@@ -16,10 +16,10 @@ class BookResource extends JsonResource
     {
 //        return parent::toArray($request);
         return [
-            'book_id' => "#$this->id",
+            'book_id' => $this->id,
             'book_name' => $this->title,
-            'book_author' => $this->author,
-            'book_description' => $this->description,
+            'book_author' => $this->author ? $this->author : '',
+            'book_description' => $this->description ? $this->description : '',
             'num_of_read_pages' => '',
         ];
     }

@@ -49,5 +49,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 //---------------------------- Reading Interval Routes ----------------
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('/reading-interval', [ReadingIntervalController::class, 'store']);
+    Route::post('/calculate-intervals', [ReadingIntervalController::class, 'calculate_intervals']);
 });
 //---------------------------- Reading Interval Routes ----------------

@@ -15,4 +15,18 @@ class Book extends Model
       'author',
       'description'
     ];
+
+    public function ReadingIntervals() {
+        return $this->hasMany(ReadingInterval::class);
+    }
+
+    public function calculateIntervals() {
+        $count = 0;
+
+        foreach ($this->ReadingIntervals as $interval) {
+            $count += $interval->end_page - $interval->start_page;
+        }
+
+        return $count;
+    }
 }

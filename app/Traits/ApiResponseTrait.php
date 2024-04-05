@@ -29,7 +29,7 @@ trait ApiResponseTrait
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return $this->successResponse(null, $validator->errors()->toJson(), 400);
+            return $this->successResponse(null, $validator->errors(), 400);
         }
     }
 }
