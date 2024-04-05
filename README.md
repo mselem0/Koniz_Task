@@ -39,7 +39,7 @@ php artisan jwt:secret
 <p>6. Generate App Key</p>
 
 ```
-php artisan:key generate
+php artisan key:generate
 ```
 
 <p>7. Run Migration</p>
